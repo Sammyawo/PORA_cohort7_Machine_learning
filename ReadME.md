@@ -5,8 +5,9 @@ This project provides an API for predicting whether client would churn or not ba
 - [Description](#description)
 - [Requirements](#requirements)
 - [Getting Started](#getting-started)
-- [1. Train and Save the Model](#1-train-and-save-the-model)
-- [2. Run the FastAPI Backend](#2-deploy-fastapi)
+    - [1. Train and Save the Model](#1-train-and-save-the-model)
+    - [2. Run the FastAPI Backend](#2-run-the-fastapi-backend)
+    - [3. Run the Streamlit App](#3-run-the-streamlit-app)
 - [Endpoints](#endpoints)
 - [Example Input and Output](#example-input-and-output)
 - [File Structure](#file-structure)
@@ -16,7 +17,7 @@ This project provides an API for predicting whether client would churn or not ba
 The FastAPI application loads the trained XGBoost model and exposes an endpoint for predicting if user `Exited` or not based on user's input. The model is trained on the following features:
 
 - CreditScore
-- Geography (one-hot encoded: Geography_Germany, Geography_Spain; France is the baseline)
+- Geography (one-hot encoded: `Geography_Germany`, `Geography_Spain`; `France` is the baseline)
 - Gender
 - Age
 - Tenure
@@ -27,6 +28,8 @@ The FastAPI application loads the trained XGBoost model and exposes an endpoint 
 - EstimatedSalary
 
 The API predicts if customer `Exited` on these features.
+
+The Streamlit app (`streamlit_app.py`) is a simple form-based UI that sends requests to the FastAPI backend and displays the predicted churn status and probability.
 
 ## Requirements
 To set up and run this project, you’ll need the following Python packages:
@@ -39,6 +42,8 @@ To set up and run this project, you’ll need the following Python packages:
 - `numpy`
 - `xgboost`
 - `pydantic`
+- `Streamlit`
+- `requests`
 
 You can install these dependencies by running:
 ```bash
@@ -51,13 +56,22 @@ Train the XGBoost Classifier model using Scikit-Learn and XGBoost Classifier and
 ```bash
 python model_pipeline.py
 ```
-This will create the model.pkl file in the model/ directory.
+This will create the `model.pkl` file in the `model/` directory.
 
-2. The FastAPI application (api.py) loads the saved model and provides an endpoint for predictions. Run it using uvicorn:
+2. Run the FastAPI Backend
+The FastAPI application (`api.py`) loads the saved model and provides an endpoint for predictions. Run it using uvicorn:
 ```bash
 uvicorn api:app --reload
 ```
-This will start the FastAPI server at http://127.0.0.1:8000
+This will start the FastAPI server at `http://127.0.0.1:8000`
+
+
+3. Run the Streamlit App
+```bash
+streanlit run streamlit_app.py
+```
+This opens the UI at http://localhost:8501, where you can fill in customer details and get a live prediction from the API.
+
 
 ## Endpoints
 ![API Image](src/)
@@ -117,6 +131,7 @@ The project directory is structured as follows:
 ├─ .gitignore
 ├─ api.py
 ├─ model_pipeline.py
+├─ streamlit_app.py
 ├─ README.md
 └─ requirements.txt
 ```

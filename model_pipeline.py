@@ -53,7 +53,7 @@ def load_and_Prepare_data(path: str = DATA_PATH) -> tuple[pd.DataFrame, pd.Serie
 def train_and_save_model() -> None:
     x, y = load_and_Prepare_data()
     X_train, X_test, y_train, y_test = train_test_split(
-        x, y, test_size=0.2, random_state=0, stratify=y
+        x, y, test_size=0.2, random_state=42, stratify=y
     )
 
     # Build and train the model
